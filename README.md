@@ -43,7 +43,7 @@ GSoC 2026 acceptance criteria PoC for the project **"Rewrite FOSSology UI using 
 4. The global **Axios Interceptor** automatically attaches the Bearer token to the outgoing request. If the token has expired, it intercepts the 401 block, fetches a new refresh token seamlessly, and safely retries the original request without user interruption.
 
 
-## Detailed Walkthrough
+## Walkthrough
 
 ### 1. Global State ([Zustand](https://zustand-demo.pmnd.rs/))
 Located in `store/useAuthStore.ts`.
