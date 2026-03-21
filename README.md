@@ -1,15 +1,20 @@
-# FOSSologyUI Next.js Modernization PoC
+# FOSSologyUI Next.js Modernization
 
-Proof-of-concept demonstrating the transition of the FOSSology user interface from legacy state management to a modern, scalable Next.js architecture. 
+Demonstration of the transition of the FOSSology user interface from legacy state management to a modern, scalable Next.js architecture. 
 
-GSoC 2026 acceptance criteria PoC for the project **"Rewrite FOSSology UI using NextJS"**. https://github.com/fossology/fossology/discussions/3267#discussioncomment-15578012
+GSoC 2026 acceptance criteria for the project **"Rewrite FOSSology UI using NextJS"**. https://github.com/fossology/fossology/discussions/3267#discussioncomment-15578012
 
-## What This Demonstrates
+## Purpose of this 
+This folder contains a **technical validation** of the proposed tech stack (Next.js, Tailwind CSS, Zustand, and TanStack React Query) working together. 
 
+**What is the objective here?**
+This is not a final, fully integrated deliverable with a working UI views. Instead, it is an architectural proof. It validates that the selected technologies can be effectively combined to solve the existing architecture's bottlenecks. It demonstrates:
 - **Global State Management:** Using Zustand for centralized authentication state instead of scattered `useState` hooks and prop drilling.
-- **Server State & Caching:** Utilizing TanStack React Query to fetch, cache, and synchronize remote API data, completely replacing complex local fetching logic.
+- **Server State & Caching:** Utilizing TanStack React Query to fetch, cache, and synchronize remote API data securely.
 - **Secure Authentication Flow:** Robust token injection, automatic token refresh rotation via Axios Interceptors, and robust session handling.
-- **Server-Side Route Protection:** Next.js Middleware protecting key routes (e.g., `/browse`, `/upload`) before the page even loads.
+- **Route Protection:** Next.js Middleware protecting key routes (e.g., `/browse`, `/upload`) before any page rendering occurs.
+
+Building the complete, interactive frontend integrated closely with FOSSology's APIs is the primary deliverable of the upcoming GSoC project phase.
 
 ## Architecture & Data Flow
 
@@ -80,31 +85,9 @@ src/
 ├── utils/                      # Helper functions and formatters
 └── middleware.ts               # Global Next.js request interceptor & route protector
 ```
-
-## Strategy for Completing the Next.js Migration (Remaining 70-80%)
-
-Since the current UI is only **20-30% complete** compared to the legacy Symfony/Twig interface, tasks is to migrate the remaining 70-80% requires in Next.js, systematic approach:
-
-### 1. The Audit & Mapping Phase (First Weeks)
-* **UI Gap Analysis:** I will systematically document all missing legacy workflows and map them strictly to the existing REST API endpoints, immediately flagging any legacy features that do not yet have a matching backend REST API.
-
-### 2. Standardizing the Component & Data Foundation (Early Coding)
-* **Base Architecture:** Build the core foundations demonstrated in this PoC first (Zustand Auth Store, Axios Interceptors, Next.js Route Middleware).
-* **Component Library:** Finalize a core set of highly reusable UI components (Data Tables, Modals, Breadcrumbs) and standardize all form inputs exclusively using **React Hook Form** + **Zod**.
-
-### 3. Iterative, Feature-Driven Implementation (Weeks 5-10)
-Instead of building blindly, the integration will be handled module-by-module, moving from easiest to most complex:
-* **Module A (Read-Only Views):** Dashboard, Browse Files, and Package Search. These modules rely heavily on `GET` requests, entirely abstracted using global **TanStack React Query** hooks.
-* **Module B (Mutations & Uploads):** Uploads, folder management, and user settings. Utilizing React Query `useMutation` hooks alongside the global Axios error handling.
-* **Module C (Core Compliance Tools):** License clearing interfaces, copyright scanners, and reporting tools. These are the heaviest features of FOSSology, requiring **Zustand** to gracefully handle complex local state tracking across massive component trees.
-
-### 4. Continuous Integration & Parity Testing (Weeks 11-12)
-* Validate absolute feature and workflow parity against the older Symfony UI manually.
-* Implement comprehensive unit and integration tests utilizing **Jest** and **React Testing Library** for all newly migrated components to secure against future regressions.
-
 ## Relevance to GSoC 2026
 
-This PoC directly addresses the scaling and architectural pain points outlined in my proposal for FOSSologyUI. [GSoC 2026 Discussion](https://github.com/fossology/fossology/discussions/3267#discussioncomment-15578012)
+This demonstration directly addresses the scaling and architectural pain points outlined in my proposal for FOSSologyUI. [GSoC 2026 Discussion](https://github.com/fossology/fossology/discussions/3267#discussioncomment-15578012)
 By migrating from heavily scattered local state hooks (currently 260+ instances) to a layered, predictable architecture (Zustand + React Query + Next.js Middleware), the codebase becomes infinitely more scalable, highly performant, and significantly easier for the open-source community to understand and maintain.
 
 ---
